@@ -8,11 +8,9 @@ from threading import Thread
 
 pya.FAILSAFE = True #When fail-safe mode is True, moving the mouse to the upper-left will raise a pyautogui.FailSafeException that can abort your program
 
-
 #Need to use the WASD letters.
 firstDir = "w"
 secondDir = "d"
-
 firstDirTime = 5
 secondDirTime = 2
 
@@ -23,8 +21,6 @@ noRocksTimerKillTime = 5
 noRocksTimerStarted = False
 print(noRocksTimerStarted)
 print(type(noRocksTimerStarted))
-
-print("TEST")
 
 keys = {
     "0": 0x30,
@@ -45,40 +41,27 @@ pya.size()
 centerScreen = pya.size()
 centerScreen = centerScreen.width/2, centerScreen.height/2 - 15
 
-
 def main():
     SendKey(keys['f9']) #Press the F9 key to zoom the the preset amount.
     ShiftSendKey(keys['0']) # Shift + 0
     PressKey(keys['space'])
 
     while keyboard.is_pressed('i') == False: #If 'i' is pressed it will stop the program. 
-        #Mine first direction
-        mine(firstDir, firstDirTime)
-        
-        #Mine second direction
-        mine(secondDir, secondDirTime)
-        
-        #Mine inverse of first direction
-        mine(invertDir(firstDir), firstDirTime)
-        
-        #Mine second direction
-        mine(secondDir, secondDirTime)
-                        
+        mine(firstDir, firstDirTime) #Mine first direction
+        mine(secondDir, secondDirTime) #Mine second direction        
+        mine(invertDir(firstDir), firstDirTime) #Mine inverse of first direction
+        mine(secondDir, secondDirTime) #Mine second direction                
     ReleaseKey(keys['space'])
 
 def invertDir(Dir):
     if Dir == "a": #Left to right
         newDir = "d"
-
     elif Dir == "d": #Right to left
         newDir = "a"
-
     elif Dir == "w": #Up to down
         newDir = "s"
-
     elif Dir == "s": #Down to up
         newDir = "w"
-
     return newDir
 
 def mine(direction, mineTime):
@@ -91,16 +74,13 @@ def mine(direction, mineTime):
     
     if direction == "w":
         xOffset = 0
-        yOffset = -50
-        
+        yOffset = -50        
     elif direction == "a":
         xOffset = -20
-        yOffset = 0
-        
+        yOffset = 0        
     elif direction == "s":
         xOffset = 0
         yOffset = 20
-
     elif direction == "d":
         xOffset = 20
         yOffset = 0
@@ -122,7 +102,6 @@ def mine(direction, mineTime):
         checkForChest()
         checkForDeath()
         PressKey(keys[direction])
-
         checkForNoRocks()
                                         
     ReleaseKey(keys[direction])    
@@ -134,7 +113,6 @@ def mine(direction, mineTime):
     checkForLowHealth()
     placeChest(direction) #Place a chest behind me
     depositOre()
-
 
 def checkForNoRocks():
     global noRocksTimer
@@ -152,7 +130,6 @@ def checkForNoRocks():
         noRocksTimerStarted = False
         noRocksTimer = 0
 
-
 def noRocksTimerFunction():
     global noRocksTimer
     global noRocksTimerStarted
@@ -168,9 +145,7 @@ def noRocksTimerFunction():
         if noRocksTimer > noRocksTimerKillTime or keyboard.is_pressed('i') == True: #Check if I want to stop the program
             releaseAllKeys()
             sys.exit("Timer > x sec OR manually stopped")
-        
 
-    
 def checkForLowHealth():
     if (pya.locateOnScreen('img/healthBar2.png', region = (600,894,600,20), confidence=0.9) is not None): #Checks if the cursor is over a spaceship that can not be mined.     
         print("Low Health")
@@ -203,7 +178,6 @@ def killSwitchCheck():
     if keyboard.is_pressed('i') == True: #Check if I want to stop the program
         releaseAllKeys()        
         sys.exit("Program manually stopped")
-        
 
 def placeChest(direction):
     print('place chest')
@@ -250,11 +224,8 @@ def releaseAllKeys():
     for x in keys:
         print("Releasing the " + x + " key")
         ReleaseKey(keys[x])
-    
 
 time.sleep(3)
 print("Start")
-
 main()
-
 print("Done")
