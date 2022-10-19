@@ -88,7 +88,7 @@ def ReleaseKey(hexKeyCode):
 
 def SendKey(hexKeyCode):
     PressKey(hexKeyCode)
-    time.sleep(0.5)
+    time.sleep(0.2)
     ReleaseKey(hexKeyCode)
 
 

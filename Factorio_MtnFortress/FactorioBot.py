@@ -22,7 +22,7 @@ noRocksTimerStarted = False
 print(noRocksTimerStarted)
 print(type(noRocksTimerStarted))
 
-keys = {
+keys = { # msdn.microsoft.com/en-us/library/dd375731
     "0": 0x30,
     "1": 0x31,
     "2": 0x32,
